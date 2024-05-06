@@ -1,0 +1,258 @@
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+  display: flex;
+  height: 100vh;
+  overflow: hidden;
+  /* Hide overflow */
+}
+
+.sidebar-header {
+  border-top: 1px solid black;
+  /* Example border: 1px solid black; */
+  /* You can adjust the border style, width, and color as per your design */
+  border-bottom: 1px solid black;
+  margin-bottom: 50px;
+}
+
+.folder-icon {
+  margin-left: 10px;
+  cursor: pointer;
+  /* Make the folder icon clickable */
+}
+
+.sidebar {
+  width: 20%;
+  background-color: #d4d4d4;
+  /* Dark background color */
+  color: #060202;
+  /* Light text color */
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  padding-top: 20px;
+  overflow-y: auto;
+  /* Add scrollbar if needed */
+}
+
+.nav-item {
+  margin-top: 10px;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.nav-item i {
+  margin-right: 10px;
+}
+
+#section3 {
+  width: 80%;
+  /* Adjust width as needed */
+  overflow-y: auto;
+  /* Add scrollbar if needed */
+  padding: 20px;
+}
+
+#preview-section {
+  width: 30%;
+  /* Adjust width as needed */
+  background-color: #f0f0f0;
+  /* Light background color */
+  padding: 20px;
+  overflow-y: auto;
+  /* Add scrollbar if needed */
+}
+
+.search-bar,
+.folder-icon,
+.view-settings {
+  margin-bottom: 10px;
+  /* Add margin bottom to separate items */
+}
+
+.search-bar,
+.folder-icon {
+  flex: 0 0 auto;
+  /* Allow elements to grow and shrink as needed */
+}
+
+.view-settings {
+  flex: 1;
+  /* Allow this element to take remaining space */
+}
+
+/* Additional styles for buttons and icons */
+button {
+  border: none;
+  background: none;
+  cursor: pointer;
+}
+
+input[type="text"] {
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+}
+
+/* Assuming you are using Font Awesome for icons */
+i.fas {
+  font-size: 16px;
+}
+
+.folder-content {
+  border-top: 1px solid black;
+  padding-top: 10px;
+  /* Adjust the padding as needed */
+}
+
+/* Modal styles */
+.modal {
+  display: none;
+  /* Hidden by default */
+  position: fixed;
+  /* Stay in place */
+  z-index: 1;
+  /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%;
+  /* Full width */
+  height: 100%;
+  /* Full height */
+  overflow: auto;
+  /* Enable scroll if needed */
+  background-color: rgba(0, 0, 0, 0.4);
+  /* Black w/ opacity */
+  padding-top: 60px;
+  /* Place modal at center */
+}
+
+.modal-content {
+  background-color: #f7f7f7;
+  /* Change modal background color */
+  margin: 5% auto;
+  /* Center modal */
+  padding: 20px;
+  border-radius: 10px;
+  /* Add border-radius */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  /* Add box shadow */
+  max-width: 400px;
+  /* Limit modal width */
+}
+
+.close {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+/* Button style for the modal */
+.modal-button {
+  background-color: #007bff;
+  /* Add background color */
+  color: #fff;
+  /* Change text color */
+  padding: 8px 16px;
+  /* Add padding */
+  border: none;
+  border-radius: 5px;
+  /* Add border-radius */
+  cursor: pointer;
+}
+
+/* Hover effect for the button */
+.modal-button:hover {
+  background-color: #0056b3;
+  /* Darken the background color on hover */
+}
+
+/* File container style */
+.file-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 10px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  cursor: pointer;
+  width: 150px;
+  /* Set width for consistency */
+}
+
+.file-icon {
+  max-width: 100px;
+  /* Adjust maximum width of the icon */
+  max-height: 100px;
+  /* Adjust maximum height of the icon */
+}
+
+.file-container:hover {
+  background-color: #f0f0f0;
+}
+
+/* File name style */
+.file-name {
+  margin-top: 5px;
+  /* Add margin to separate icon and name */
+  text-align: center;
+  /* Center-align file name */
+  overflow: hidden;
+  /* Hide overflow */
+  text-overflow: ellipsis;
+  /* Display ellipsis for long names */
+  white-space: nowrap;
+  /* Prevent wrapping */
+  width: 100%;
+  /* Ensure file name takes full width */
+}
+
+/* Add styles for delete and download icons */
+.file-actions {
+  display: flex;
+  align-items: center;
+  margin-left: auto;
+}
+
+.file-actions i {
+  margin-right: 5px;
+  cursor: pointer;
+}
+
+.file-row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  /* Adjust margin between rows as needed */
+}
+
+/* Close button style */
+#close-preview {
+  display: none;
+  /* Hide the button initially */
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 20px;
+}
+
+#close-preview:hover {
+  background-color: #0056b3;
+  /* Darken the background color on hover */
+}
