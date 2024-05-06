@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Three Sections</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"> <!-- Font Awesome for icons -->
+<style>
+  body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    display: flex;
+    height: 100vh;
+  }
+  .sidebar-header {
+    border-top: 1px solid black; /* Example border: 1px solid black; */
+    /* You can adjust the border style, width, and color as per your design */
+    border-bottom: 1px solid black ;
+    margin-bottom: 50px;
+  }
+  .folder-icon{
+    margin-left: 10px;
+    cursor: pointer; /* Make the folder icon clickable */
+  }
+ 
+  .sidebar {
+    width: 20%;
+    background-color: #d4d4d4; /* Dark background color */
+    color: #060202; /* Light text color */
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    padding-top: 20px;
+  }
+  
+  .nav-item {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+  }
+
+  .nav-item i {
+    margin-right: 10px;
+  }
+
+  #section3 {
+    display: flex; /* Use flexbox */
+    flex-direction: column; /* Arrange items vertically */
+    margin: 20px;
+  }
+
+  .search-bar,
+  .folder-icon,
+  .view-settings {
+    margin-bottom: 10px; /* Add margin bottom to separate items */
+  }
+
+  .search-bar,
+  .folder-icon {
+    flex: 0 0 auto; /* Allow elements to grow and shrink as needed */
+  }
+
+  .view-settings {
+    flex: 1; /* Allow this element to take remaining space */
+  }
+
+  /* Additional styles for buttons and icons */
+  button {
+    border: none;
+    background: none;
+    cursor: pointer;
+  }
+
+  input[type="text"] {
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+  }
+
+  /* Assuming you are using Font Awesome for icons */
+  i.fas {
+    font-size: 16px;
+  }
+
+  .folder-content {
+    border-top: 1px solid black;
+    padding-top: 10px; /* Adjust the padding as needed */
+}
+
+  /* Modal styles */
+  .modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+    padding-top: 60px; /* Place modal at center */
+  }
+
+  .modal-content {
+    background-color: #f7f7f7; /* Change modal background color */
+    margin: 5% auto; /* Center modal */
+    padding: 20px;
+    border-radius: 10px; /* Add border-radius */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Add box shadow */
+    max-width: 400px; /* Limit modal width */
+  }
+
+  .close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+  }
+
+  .close:hover,
+  .close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+  }
+
+  /* Button style for the modal */
+  .modal-button {
+    background-color: #007bff; /* Add background color */
+    color: #fff; /* Change text color */
+    padding: 8px 16px; /* Add padding */
+    border: none;
+    border-radius: 5px; /* Add border-radius */
+    cursor: pointer;
+  }
+
+  /* Hover effect for the button */
+  .modal-button:hover {
+    background-color: #0056b3; /* Darken the background color on hover */
+  }
+
+  /* Style for file container */
+  .file-container {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+
+  .file-container:hover {
+    background-color: #f0f0f0;
+  }
+
+  /* File name style */
+  .file-name {
+    margin-left: 10px;
+  }
+
+</style>
+</head>
+<body>
+  <div class="sidebar">
+    <div class="sidebar-header">
+      <h2 class="folder-icon" id="addFolder">Folder <i class="fa-solid fa-folder-plus"></i></h2>
+    </div>
+    <div class="nav-item">
+        <input type="checkbox" id="calling-card" name="calling-card">
+        <i class="fa-regular fa-folder"></i>
+      <label for="calling-card">Calling Card</label>
+    </div>
+    <div class="nav-item">
+        <input type="checkbox" id="catalog" name="catalog">
+        <i class="fa-regular fa-folder"></i>
+      <label for="catalog">Catalog</label>
+    </div>
+    <div class="nav-item">
+      <input type="checkbox" id="certificate" name="certificate">
+      <i class="fa-regular fa-folder"></i>
+      <label for="certificate">Certificate</label>
+    </div>
+    <div class="nav-item">
+      <input type="checkbox" id="logo" name="logo">
+      <i class="fa-regular fa-file"></i>
+      <label for="logo">File</label>
+    </div>
+  </div>
+  <div id="section3" class="section">
+    <div class="search-bar">
+        <input type="text" placeholder="Search...">
+        <button><i class="fas fa-search"></i></button>
+        <i class="fa-solid fa-file-circle-plus add-file"></i> <!-- Added icon -->
+    </div>
+      <!-- Content of each folder will be appended here -->
+  </div>
+
+<!-- The Modal -->
+<div id="myModal" class="modal">
+  <!-- Modal content -->
+  <div class="modal-content">
+    <span class="close">&times;</span>
+    <p>Enter folder name:</p>
+    <input type="text" id="newFolderName">
+    <button id="submitFolder" class="modal-button">Submit</button>
+  </div>
+</div>
+
+<script>
+  const callingCardItem = document.getElementById('calling-card');
+  const catalogItem = document.getElementById('catalog');
+  const certificateItem = document.getElementById('certificate');
+  const logoItem = document.getElementById('logo');
+  const section3 = document.getElementById('section3');
+
+  // Function to toggle folder content visibility
+  function toggleFolderContent(item, content) {
+    if (item.checked) {
+      content.style.display = 'block';
+    } else {
+      content.style.display = 'none';
+    }
+  }
+
+  // Creating content for each folder
+  const callingCardContent = document.createElement('div');
+callingCardContent.innerHTML = `
+    <div class="folder-content">
+        <p>This is the content of the Calling Card folder.</p>
+        <p>You can put any relevant information or files here.</p>
+    </div>
+`;
+callingCardContent.style.display = 'none';
+section3.appendChild(callingCardContent);
+
+  const catalogContent = document.createElement('div');
+  catalogContent.innerHTML = `
+  <div class="folder-content">
+    <p>This is the content of the Catalog folder.</p>
+    <p>Feel free to add product listings, descriptions, or images here.</p>
+    </div>
+  `;
+  catalogContent.style.display = 'none';
+  section3.appendChild(catalogContent);
+
+  const certificateContent = document.createElement('div');
+  certificateContent.innerHTML = `
+  <div class="folder-content">
+    <p>This is the content of the Certificate folder.</p>
+    <p>You can store certificates or awards in this folder.</p>
+    </div>
+  `;
+  certificateContent.style.display = 'none';
+  section3.appendChild(certificateContent);
+
+  const logoContent = document.createElement('div');
+  logoContent.innerHTML = `
+  <div class="folder-content">
+  
+    <p>This is the content of the File folder.</p>
+    <p>You can place your files here.</p>
+    </div>
+  `;
+  logoContent.style.display = 'none';
+  section3.appendChild(logoContent);
+
+  // Modal functionality
+  const modal = document.getElementById('myModal');
+  const addFolderBtn = document.getElementById('addFolder');
+  const submitFolderBtn = document.getElementById('submitFolder');
+  const newFolderNameInput = document.getElementById('newFolderName');
+
+  addFolderBtn.addEventListener('click', () => {
+    modal.style.display = 'block';
+  });
+
+  // When the user clicks on <span> (x), close the modal
+  const spanClose = document.getElementsByClassName('close')[0];
+  spanClose.onclick = function() {
+    modal.style.display = 'none';
+  }
+
+  // When the user clicks anywhere outside of the modal, close it
+  window.onclick = function(event) {
+    if (event.target == modal) {
+      modal.style.display = 'none';
+    }
+  }
+
+  // When the user submits the new folder name
+  submitFolderBtn.addEventListener('click', () => {
+    const newFolderName = newFolderNameInput.value;
+    if (newFolderName.trim() !== '') {
+      const newNavItem = document.createElement('div');
+      newNavItem.classList.add('nav-item');
+      newNavItem.innerHTML = `
+        <input type="checkbox" id="${newFolderName.toLowerCase().replace(/\s/g, '-')}" name="${newFolderName.toLowerCase().replace(/\s/g, '-')}">
+        <i class="fa-regular fa-folder"></i>
+        <label for="${newFolderName.toLowerCase().replace(/\s/g, '-')}">${newFolderName}</label>
+      `;
+      document.querySelector('.sidebar').insertBefore(newNavItem, addFolderBtn.parentElement.nextSibling);
+      modal.style.display = 'none';
+      // Clear input field after adding folder
+      newFolderNameInput.value = '';
+    }
+  });
+  
+  // Variable to store reference to the last clicked folder
+  let lastClickedFolder = null;
+
+  // Event listeners for folder items
+  callingCardItem.addEventListener('click', () => {
+    lastClickedFolder = callingCardContent;
+    toggleFolderContent(callingCardItem, callingCardContent);
+  });
+
+  catalogItem.addEventListener('click', () => {
+    lastClickedFolder = catalogContent;
+    toggleFolderContent(catalogItem, catalogContent);
+  });
+
+  certificateItem.addEventListener('click', () => {
+    lastClickedFolder = certificateContent;
+    toggleFolderContent(certificateItem, certificateContent);
+  });
+
+  logoItem.addEventListener('click', () => {
+    lastClickedFolder = logoContent;
+    toggleFolderContent(logoItem, logoContent);
+  });
+
+  // Add File button functionality
+  const addFileBtns = document.querySelectorAll('.add-file');
+  addFileBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      if (lastClickedFolder !== null) {
+        const fileInput = document.createElement('input');
+        fileInput.setAttribute('type', 'file');
+        fileInput.setAttribute('multiple', '');
+        fileInput.style.display = 'none';
+        fileInput.addEventListener('change', (event) => {
+          handleFileSelect(event, lastClickedFolder);
+        });
+        document.body.appendChild(fileInput);
+        fileInput.click();
+      } else {
+        alert('Please select a folder first.');
+      }
+    });
+  });
+
+  // Function to handle file selection
+  function handleFileSelect(event, folderContent) {
+    const files = event.target.files;
+    if (files.length === 0) return;
+
+    const content = folderContent;
+    for (const file of files) {
+      const fileName = file.name;
+      const fileType = getFileType(fileName);
+      const fileContainer = document.createElement('div');
+      fileContainer.classList.add('file-container');
+      fileContainer.innerHTML = `
+        <i class="${getIconClass(fileType)}"></i>
+        <span class="file-name">${fileName}</span>
+      `;
+      content.appendChild(fileContainer);
+
+      // Add event listener to preview file on click
+      fileContainer.addEventListener('click', () => {
+        if (fileType === 'pdf') {
+          // If the file is a PDF, open in a new tab for preview
+          window.open(URL.createObjectURL(file), '_blank');
+        } else if (fileType === 'word') {
+          // If the file is a Word document, open in a new tab for preview
+          window.open(URL.createObjectURL(file), '_blank');
+        } else if (fileType === 'image') {
+          // If the file is an image, show it in a modal for preview
+          const imageModal = document.createElement('div');
+          imageModal.classList.add('modal');
+          const image = document.createElement('img');
+          image.src = URL.createObjectURL(file);
+          imageModal.appendChild(image);
+          document.body.appendChild(imageModal);
+          imageModal.style.display = 'block';
+
+          // Close the modal when clicked outside
+          imageModal.addEventListener('click', () => {
+            imageModal.style.display = 'none';
+            document.body.removeChild(imageModal);
+          });
+        } else {
+          alert('Preview not available for this file type.');
+        }
+      });
+    }
+  }
+
+  // Function to get file type from file name
+  function getFileType(fileName) {
+    const extension = fileName.split('.').pop().toLowerCase();
+    if (extension === 'pdf') return 'pdf';
+    else if (extension === 'doc' || extension === 'docx') return 'word';
+    else if (extension === 'txt') return 'txt';
+    else if (extension === 'png' || extension === 'jpg' || extension === 'jpeg' || extension === 'gif') return 'image';
+    else return 'other';
+  }
+
+  // Function to get icon class based on file type
+  function getIconClass(fileType) {
+    switch (fileType) {
+      case 'pdf':
+        return 'fas fa-file-pdf';
+      case 'word':
+        return 'fas fa-file-word';
+      case 'txt':
+        return 'fas fa-file-alt';
+      case 'image':
+        return 'fas fa-file-image';
+      default:
+        return 'fas fa-file';
+    }
+  }
+
+</script>
+</body>
+</html>
