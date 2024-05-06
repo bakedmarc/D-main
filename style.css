@@ -256,3 +256,8 @@ i.fas {
   background-color: #0056b3;
   /* Darken the background color on hover */
 }
+
+.folder-content.drag-over {
+  border: 2px dashed #007bff;
+  background-color: #f0f8ff;
+}
