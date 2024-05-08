@@ -406,6 +406,7 @@
       previewSection.innerHTML = ''; // Clear the preview section
       closePreviewBtn.style.display = 'none'; // Hide the "Close Preview" button after closing preview
     });
+<<<<<<< HEAD
    // Function to handle drag start event
    function handleDragStart(event) {
       event.dataTransfer.setData("text/plain", event.target.id);
@@ -496,6 +497,33 @@ document.addEventListener('DOMContentLoaded', function() {
 
     
    </script>
+=======
+    function handleDragOver(event) {
+  event.preventDefault();
+  event.dataTransfer.dropEffect = 'copy';
+}
+
+function handleDragEnter(event) {
+  event.preventDefault();
+  this.classList.add('drag-over');
+}
+
+function handleDragLeave() {
+  this.classList.remove('drag-over');
+}
+
+function handleDrop(event) {
+  event.preventDefault();
+  this.classList.remove('drag-over');
+
+  const files = event.dataTransfer.files;
+  handleFileSelect(files, this);
+}
+
+    
+  </script>
+  <script src="event-listener.js"></script>
+>>>>>>> 90f9d491ee222b356246011a765375b44b871406
 </body>
 
 </html>
