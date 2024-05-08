@@ -23,31 +23,46 @@
 </head>
 
 <body>
+  
+
+  <!---red -->
+  <div class="sidebar1">
+    
+    <img src="logo1.jpg" alt="Logo" style="width: 100px; margin: 20px;">
+    <ul>
+        <li><a href="#" onclick="showContent('upload')"><i class="fas fa-file-upload"></i> Upload Files</a></li>
+        <li><a href="#" onclick="showContent('private-folder')"><i class="fas fa-folder"></i> Private Folder</a></li>
+        <li><a href="#" onclick="showContent('account')"><i class="fas fa-user"></i> Account</a></li>
+    </ul>
+  </div>
   <!-- Side Bar -->
-  <div class="sidebar">
-    <div class="sidebar-header">
-      <h2 class="folder-icon" id="addFolder">Folder <i class="fa-solid fa-folder-plus"></i></h2>
-    </div>
-    <div class="nav-item">
-      <input type="checkbox" id="calling-card" name="calling-card">
-      <i class="fa-regular fa-folder"></i>
-      <label for="calling-card">Calling Card</label>
-    </div>
-    <div class="nav-item">
-      <input type="checkbox" id="catalog" name="catalog">
-      <i class="fa-regular fa-folder"></i>
-      <label for="catalog">Catalog</label>
-    </div>
-    <div class="nav-item">
-      <input type="checkbox" id="certificate" name="certificate">
-      <i class="fa-regular fa-folder"></i>
-      <label for="certificate">Certificate</label>
-    </div>
-    <div class="nav-item">
-      <input type="checkbox" id="logo" name="logo">
-      <i class="fa-regular fa-folder"></i>
-      <label for="logo">File</label>
-    </div>
+  <!-- Add an ID to the sidebar navigation items -->
+<div class="sidebar">
+  <div class="sidebar-header">
+    <h2 class="folder-icon" id="addFolder">Folder <i class="fa-solid fa-folder-plus"></i></h2>
+  </div>
+  <div class="nav-item" id="calling-card-item">
+    <input type="checkbox" id="calling-card" name="calling-card">
+    <i class="fa-regular fa-folder"></i>
+    <label for="calling-card">Calling Card</label>
+  </div>
+  <div class="nav-item" id="catalog-item">
+    <input type="checkbox" id="catalog" name="catalog">
+    <i class="fa-regular fa-folder"></i>
+    <label for="catalog">Catalog</label>
+  </div>
+  <div class="nav-item" id="certificate-item">
+    <input type="checkbox" id="certificate" name="certificate">
+    <i class="fa-regular fa-folder"></i>
+    <label for="certificate">Certificate</label>
+  </div>
+  <div class="nav-item" id="logo-item">
+    <input type="checkbox" id="logo" name="logo">
+    <i class="fa-regular fa-folder"></i>
+    <label for="logo">File</label>
+  </div>
+</div>
+
   </div>
   <div id="section3" class="section">
     <div class="search-bar">
@@ -391,7 +406,96 @@
       previewSection.innerHTML = ''; // Clear the preview section
       closePreviewBtn.style.display = 'none'; // Hide the "Close Preview" button after closing preview
     });
-  </script>
+   // Function to handle drag start event
+   function handleDragStart(event) {
+      event.dataTransfer.setData("text/plain", event.target.id);
+    }
+
+    // Function to handle drag over event
+    function handleDragOver(event) {
+      event.preventDefault();
+    }
+
+    // Function to handle drop event
+    function handleDrop(event) {
+      event.preventDefault();
+      const fileId = event.dataTransfer.getData("text/plain");
+      const fileElement = document.getElementById(fileId);
+      const targetFolderId = event.target.closest('.folder-content').id;
+      const targetFolder = document.getElementById(targetFolderId);
+      targetFolder.appendChild(fileElement);
+    }
+
+    // Add draggable attribute to file containers and attach drag start event listener
+    const fileContainers = document.querySelectorAll('.file-container');
+    fileContainers.forEach(container => {
+      container.setAttribute('draggable', 'true');
+      container.addEventListener('dragstart', handleDragStart);
+    });
+
+    // Add event listeners to folder content areas for drag and drop
+    const folderContents = document.querySelectorAll('.folder-content');
+    folderContents.forEach(content => {
+      content.addEventListener('dragover', handleDragOver);
+      content.addEventListener('drop', handleDrop);
+    });
+
+    // Function to toggle active class on navigation items
+function toggleActiveClass(item) {
+  const allItems = document.querySelectorAll('.nav-item');
+  allItems.forEach((el) => {
+    el.classList.remove('active');
+  });
+  item.classList.add('active');
+}
+
+// Event listeners for sidebar navigation items
+document.getElementById('calling-card-item').addEventListener('click', function() {
+  toggleActiveClass(this);
+});
+
+document.getElementById('catalog-item').addEventListener('click', function() {
+  toggleActiveClass(this);
+});
+
+document.getElementById('certificate-item').addEventListener('click', function() {
+  toggleActiveClass(this);
+});
+
+document.getElementById('logo-item').addEventListener('click', function() {
+  toggleActiveClass(this);
+});
+document.addEventListener('DOMContentLoaded', function() {
+  const privateFolderLink = document.querySelector('.sidebar1 a[href="#private-folder"]');
+  const sidebar = document.querySelector('.sidebar');
+  const section3 = document.getElementById('section3');
+  const previewSection = document.getElementById('preview-section');
+
+  privateFolderLink.addEventListener('click', function(event) {
+    event.preventDefault(); // Prevent default link behavior
+    // Show sidebar, section 3, and preview section
+    sidebar.style.display = 'block';
+    section3.style.display = 'block';
+    previewSection.style.display = 'block';
+
+    // Optionally, you can hide other sections if needed
+    // Hide other sections here...
+
+    // Add logic to load content specific to the private folder if necessary
+    // Load content specific to private folder here...
+
+    // Optionally, you can add a class to highlight the active link
+    // privateFolderLink.classList.add('active');
+  });
+});
+
+
+   
+    
+    
+
+    
+   </script>
 </body>
 
 </html>
